@@ -1,0 +1,53 @@
+\documentclass[letterpaper, 10pt]{article}
+
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{enumerate}
+
+\author{Alex Newman, Kenneth Powers, Elaina Rivais\\\{amnewman,kwpowers,erivais\}@student.umass.edu}
+\date{Nov 2, 2012}
+\title{CMPSCI 326 - Web Programming \\ Group Project Proposal: CloudDrop}
+
+\begin{document}
+	\maketitle
+	\section{Overview}
+	An AirDrop\footnote{\url{http://en.wikipedia.org/wiki/AirDrop}}-inspired web application which enables users to easily send files and messages to one another through an intuitive drag and drop interface.
+
+	\section{Description}
+	This project is inspired by Apple's AirDrop, a technology which allows Mac users (Lion and greater) within a certain range of each other to send files to each other without the use of an intermediate network. Our implementation will make use of an intermediate server as browsers don't yet support p2p (some specs are in the works, but you would still need a server in order to find peers). Because of this, the most AirDrop-like part of the entire application will be the interface (and even that will vary from its inspiration) -- the underlying technology is completely different.
+
+	\subsection{Front End}
+	The front end will consist of two distinct sections: an area showing the current online users and an area showing past and current notifications as well as a button which will allow the user to adjust settings.
+
+	The area showing the users will be fluid in size. The users' avatars will be displayed in circles which will automatically position themselves according to available space using Isotope\footnote{\url{http://isotope.metafizzy.co/}}. The use of Isotope will also allow automatic repositioning of users when either a current user leaves or another user joins. To send a file to a user, one may simply drag the file from their desktop and drop it over the target user's avatar. The target user will then receive a notification, indicated by an animation, asking if they want to accept the file transfer. Once a file transfer is in progress, its status will be indicated via an animation. Reading and writing of files in the fashion of which we require is supported by APIs provided by HTML5.
+
+	The area showing past and current notifications will be a list of notifications that user has received. Current notifications which haven't been responded to will be bright in color whereas previous notifications the user has already taken care of will appear slightly faded. The settings button will open a modal dialog which will allow the user to adjust their name, avatar, and any other relevant information. These settings can be saved using HTML5 local storage.
+
+	The interface will utilize jQuery\footnote{\url{http://jquery.com}} for DOM manipulation and Backbone\footnote{\url{http://backbonejs.org/}} for structure. If it is deemed necessary a module loader such as RequireJS\footnote{\url{http://requirejs.org}} may be introduced -- in any case most code fragments will be implemented in a similar fashion to AMD modules.
+
+	\subsection{Back End}
+	The backend will be written in JavaScript utilizing node.js\footnote{\url{http://nodejs.org}}, Express\footnote{\url{http://expressjs.com}}, and Socket.IO\footnote{\url{http://socket.io}}. The server will maintain a list of users currently online as well as any information associated with said users (name, avatar, etc). The Express code will be simple and self-explanatory as there will only need to be one route for the index page, most of the heavy lifting will be done by Socket.IO. When a socket connection is made all users will receive a \texttt{new-user} event indicating that a new user has signed on to the application. That new user will also receive information about all the other connected users. Likewise, when a user disconnects a \texttt{user-left} event will be sent to all of the other clients. From there a \texttt{request-transfer} event may be sent from one client to another followed by an \texttt{accept-transfer} event or a \texttt{deny-transfer} event. File transfers will also occur through WebSockets, but files will transferred in small chunks in order to avoid blocking. The chunks will be created by the application on the client and will be sent through \texttt{file-chunk} events. These events are guaranteed to arrive in order since they are sent sequentially over a single TCP connection which remains open as long as the user is connected to the application and TCP will not deliver frames out of order to the application. Files are not stored on the server, rather, the chunks are directly forwarded to the client.
+
+	\subsection{Primary Goals}
+	\begin{itemize}
+		\item Implement interface which allows users to see other users who are online.
+		\item Allow users to transfer files through drag and drop.
+		\item Implement notifications area which displays past and current notifications.
+	\end{itemize}
+
+	\subsection{Secondary Goals}
+	\begin{itemize}
+		\item Allow users to send short messages to one another.
+		\item Allow transferred files of certain types to be played / viewed directly in the browser.
+	\end{itemize}
+
+	\subsection{Stretch Goals}
+	\begin{itemize}
+		\item Allow users to pause transfers.
+		\item Allow users to specify additional drop targets on their avatar (Dropbox / Google Drive accounts, email addresses, etc).
+		\item Implement Konami Code easter egg.
+	\end{itemize}
+
+	\section{Timeline}
+	Primary and secondary goals should be completed by the end of the semester with each set of goals being completed on \texttt{11/16/2012} and \texttt{12/7/2012} respectively, \emph{at the latest}. Stretch goals are only to be attempted if there is extra time before the semester ends and after secondary goals have been completed.
+\end{document}

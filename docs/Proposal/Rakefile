@@ -1,0 +1,20 @@
+require 'rake/clean'
+
+project_name = 'Proposal'
+
+input_file = "#{project_name}.tex"
+output_file = "#{project_name}.pdf"
+
+task :default => output_file
+
+CLEAN.include '*.aux', '*.log', '*.fdb_latexmk', '*.out', '*.fls'
+CLOBBER.include output_file
+
+file output_file => input_file do
+	sh "latexmk -pdf #{input_file}"
+	if RUBY_PLATFORM =~ /(win|w)32$/
+		sh "start #{output_file}"
+	elsif RUBY_PLATFORM =~ /darwin/
+		sh "open #{output_file}"
+	end
+end
