@@ -16,5 +16,7 @@ file output_file => input_file do
 		sh "start #{output_file}"
 	elsif RUBY_PLATFORM =~ /darwin/
 		sh "open #{output_file}"
+	else
+		sh "xdg-open #{output_file}"
 	end
 end
