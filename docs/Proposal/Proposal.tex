@@ -23,10 +23,10 @@
 
 	The area showing past and current notifications will be a list of notifications that user has received. Current notifications which haven't been responded to will be bright in color whereas previous notifications the user has already taken care of will appear slightly faded. The settings button will open a modal dialog which will allow the user to adjust their name, avatar, and any other relevant information. These settings can be saved using HTML5 local storage.
 
-	The interface will utilize jQuery\footnote{\url{http://jquery.com}} for DOM manipulation and Backbone\footnote{\url{http://backbonejs.org/}} for structure. If it is deemed necessary a module loader such as RequireJS\footnote{\url{http://requirejs.org}} may be introduced -- in any case most code fragments will be implemented in a similar fashion to AMD modules.
+	The interface will utilize jQuery\footnote{\url{http://jquery.com}} for DOM manipulation. Code fragments, organized using the MVVM pattern, will be separated into AMD modules which will be loaded with RequireJS.\footnote{\url{http://requirejs.org}}
 
 	\subsection{Back End}
-	The backend will be written in JavaScript utilizing node.js\footnote{\url{http://nodejs.org}}, Express\footnote{\url{http://expressjs.com}}, and Socket.IO\footnote{\url{http://socket.io}}. The server will maintain a list of users currently online as well as any information associated with said users (name, avatar, etc). The Express code will be simple and self-explanatory as there will only need to be one route for the index page, most of the heavy lifting will be done by Socket.IO. When a socket connection is made all users will receive a \texttt{new-user} event indicating that a new user has signed on to the application. That new user will also receive information about all the other connected users. Likewise, when a user disconnects a \texttt{user-left} event will be sent to all of the other clients. From there a \texttt{request-transfer} event may be sent from one client to another followed by an \texttt{accept-transfer} event or a \texttt{deny-transfer} event. File transfers will also occur through WebSockets, but files will transferred in small chunks in order to avoid blocking. The chunks will be created by the application on the client and will be sent through \texttt{file-chunk} events. These events are guaranteed to arrive in order since they are sent sequentially over a single TCP connection which remains open as long as the user is connected to the application and TCP will not deliver frames out of order to the application. Files are not stored on the server, rather, the chunks are directly forwarded to the client.
+	The backend will be written in JavaScript utilizing node.js\footnote{\url{http://nodejs.org}}, Express\footnote{\url{http://expressjs.com}}, and Socket.IO\footnote{\url{http://socket.io}}. The server will maintain a list of users currently online as well as any information associated with said users (name, avatar, etc). The Express code will be simple and self-explanatory as there will only need to be one route for the index page, most of the heavy lifting will be done by Socket.IO. When a socket connection is made all users will receive a \texttt{new-user} event indicating that a new user has signed on to the application. That new user will also receive information about all the other connected users. Likewise, when a user disconnects a \texttt{user-left} event will be sent to all of the other clients. From there a \texttt{request-transfer} event may be sent from one client to another followed by an \texttt{accept-transfer} event or a \texttt{deny-transfer} event. File transfers will also occur through WebSockets, but files will transferred in small chunks in order to avoid blocking. The chunks will be created by the application on the client and will be sent through \texttt{file-chunk} events. These events are guaranteed to arrive in order since they are sent sequentially over a single TCP connection which remains open as long as the user is connected to the application and TCP will not deliver frames out of order to the application. Files are not stored on the server, rather, the chunks are directly forwarded to the client. This project is very client-heavy, with the server acting mainly as a router for information.
 
 	\subsection{Primary Goals}
 	\begin{itemize}
@@ -37,6 +37,7 @@
 
 	\subsection{Secondary Goals}
 	\begin{itemize}
+		\item Make it pretty. Animations and design should be a second priority to the actual functionality implemented in our primary goals.
 		\item Allow users to send short messages to one another.
 		\item Allow transferred files of certain types to be played / viewed directly in the browser.
 	\end{itemize}
@@ -45,6 +46,7 @@
 	\begin{itemize}
 		\item Allow users to pause transfers.
 		\item Allow users to specify additional drop targets on their avatar (Dropbox / Google Drive accounts, email addresses, etc).
+		\item Allow file transfers to resume in the event of a disconnect.
 		\item Implement Konami Code easter egg.
 	\end{itemize}
 
