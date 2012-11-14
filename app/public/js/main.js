@@ -1,3 +1,3 @@
-require([], function () {
-  console.log('Main app file.');
+require(['lib/domReady!'], function () {
+  document.getElementById('loading').innerHTML = 'domReady!';
 });

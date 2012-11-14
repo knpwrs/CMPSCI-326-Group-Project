@@ -17,7 +17,8 @@
       "js/lib": {
         "amdust": "0.1.0",
         "jquery": "1.8.2",
-        "requirejs": "2.1.1"
+        "requirejs": "2.1.1",
+        "requirejs-domready": "2.0.1"
       },
       "css/lib": {
         "normalize.styl": "v2.0.1s"
