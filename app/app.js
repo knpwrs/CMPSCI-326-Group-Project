@@ -1,9 +1,10 @@
-// Dependencies
+// Requirements
 var express = require('express'),
     routes = require('./routes'),
     http = require('http'),
     path = require('path'),
-    cons = require('consolidate');
+    cons = require('consolidate'),
+    io = require('socket.io');
 
 // Constants
 const PUBLIC_DIR = path.join(__dirname, 'public')
@@ -11,7 +12,7 @@ const PUBLIC_DIR = path.join(__dirname, 'public')
 // Create express instance
 var app = express();
 
-// Configuration
+// Configure Express
 app.configure(function() {
   app.set('port', process.env.PORT || 3000);
   app.engine('dust', cons.dust);
@@ -40,6 +41,17 @@ app.configure('production', function () {
 app.get('/', routes.index);
 
 // Start server
-http.createServer(app).listen(app.get('port'), function() {
+var server = http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));
+});
+
+// Start and configure Socket.io
+io = io.listen(server);
+io.configure('production', function () {
+  io.set('log level', 1);
+});
+
+// Set up Socket.io
+io.sockets.on('connection', function (socket) {
+  require('./events/user')(socket);
 });

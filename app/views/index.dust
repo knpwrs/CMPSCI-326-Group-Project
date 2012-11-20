@@ -8,7 +8,9 @@
 </head>
 <body>
   <h1 id="loading">Loading...</h1>
+  <section id="users"></section>
   <script src="/js/lib/jquery.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="/js/lib/require.js" data-main="/js/main"></script>
 </body>
 </html>
