@@ -5,6 +5,9 @@
   <title dir="ltr">{title}</title>
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" media="all" href="/css/style.css" />
+  <script src="/js/lib/jquery.js" defer></script>
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="/js/lib/require.js" data-main="/js/main" defer></script>
 </head>
 <body>
   <h1 id="loading">Loading...</h1>
@@ -15,8 +18,5 @@
     <section id="users" class="hide"></section>
     <section id="notifications" class="hide">Notifications Area</section>
   </div>
-  <script src="/js/lib/jquery.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/lib/require.js" data-main="/js/main"></script>
 </body>
 </html>
