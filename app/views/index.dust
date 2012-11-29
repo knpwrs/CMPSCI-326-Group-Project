@@ -8,7 +8,13 @@
 </head>
 <body>
   <h1 id="loading">Loading...</h1>
-  <section id="users"></section>
+  <header id="header" class="hide">
+    <span id="logo">CloudDrop<sub>alpha</sub></span>
+  </header>
+  <div id="container">
+    <section id="users" class="hide"></section>
+    <section id="notifications" class="hide">Notifications Area</section>
+  </div>
   <script src="/js/lib/jquery.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/lib/require.js" data-main="/js/main"></script>

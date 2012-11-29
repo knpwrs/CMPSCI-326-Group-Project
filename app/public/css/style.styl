@@ -1,9 +1,26 @@
 @import 'lib/normalize'
 
-#users
+.hide
   display none
+
+#header
+  height 30px
+
+#container
+  width 100%
+
+notifications-width = 200px
+
+#users
+  margin-right notifications-width
+  float left
   .user-container
     width 150px
     height 150px
+    margin 10px
     background #ccc
     word-wrap break-word
+
+#notifications
+  width notifications-width
+  float right

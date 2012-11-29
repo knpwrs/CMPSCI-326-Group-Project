@@ -4,15 +4,19 @@ require({
     'dustc': 'lib/dustc'
   }
 }, [
+  'dom/header',
   'dom/users',
+  'dom/notifications',
   'events/user',
   'lib/domReady!'
 ], function (
-  $users
+  $header,
+  $users,
+  $notifications
 ) {
   // Remove Loading Indicator
   $('#loading').remove();
 
-  // Display Users Container
-  $users.show();
+  // Display all hidden elements
+  $('.hide').show();
 });
