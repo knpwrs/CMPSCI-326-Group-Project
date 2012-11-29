@@ -1,11 +1,9 @@
-require.config({
+require({
   paths: {
     'dust': 'lib/dust',
     'dustc': 'lib/dustc'
   }
-})
-
-require([
+}, [
   'dom/users',
   'events/user',
   'lib/domReady!'
