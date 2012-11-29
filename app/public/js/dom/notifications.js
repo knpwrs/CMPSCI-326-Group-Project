@@ -1,3 +1,1 @@
-define(['lib/domReady!'], function () {
-  return $('#notifications');
-});
+define(['lib/domReady!'], $('#notifications'));

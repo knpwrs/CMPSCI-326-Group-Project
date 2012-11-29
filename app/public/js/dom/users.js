@@ -1,3 +1,1 @@
-define(['lib/domReady!'], function () {
-  return $('#users');
-});
+define(['lib/domReady!'], $('#users'));
