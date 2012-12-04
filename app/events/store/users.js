@@ -22,6 +22,10 @@ exports.getUser = function (id) {
   return users[id];
 };
 
+exports.getSocket = function (id) {
+  return sockets[id];
+};
+
 // Get all users
 exports.getAllUsers = function () {
   return users;

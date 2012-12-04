@@ -8,6 +8,7 @@ require({
   'dom/users',
   'dom/notifications',
   'events/user',
+  'events/requestTransfer',
   'lib/domReady!'
 ], function (
   $header,

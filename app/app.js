@@ -54,4 +54,5 @@ io.configure('production', function () {
 // Set up Socket.io
 io.sockets.on('connection', function (socket) {
   require('./events/user')(socket);
+  require('./events/transfer')(socket);
 });
