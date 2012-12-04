@@ -1,11 +1,13 @@
 define([
   'dust',
   'dustc!./User.dust',
-  'dom/users'
+  'dom/users',
+  'actions/requestTransfer'
 ], function (
   dust,
   template,
-  $users
+  $users,
+  requestTransfer
 ) {
   var UserView = function (data) {
     this.$el = $('<div>').addClass('user-container');
@@ -37,10 +39,7 @@ define([
         var reader = new FileReader();
         reader.onload = (function (file) {
           return function (e) {
-            // data is in: e.target.result
-            console.log('Dragged file onto %s', data.name);
-            console.log(file.name);
-            console.log(file.type);
+            requestTransfer(data.name, file, e);
           };
         })(file);
         reader.readAsBinaryString(file);

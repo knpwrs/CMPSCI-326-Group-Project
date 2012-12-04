@@ -1,5 +1,5 @@
 define([
-  './socket',
+  'socket',
   'views/User'
 ], function (
   socket,
