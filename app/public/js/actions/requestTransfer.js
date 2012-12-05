@@ -6,6 +6,7 @@ define(['socket'], function (socket) {
       user: user,
       file: {
         name: file.name,
+        type: file.type,
         size: file.size
       },
       eventName: eventName
@@ -23,7 +24,6 @@ define(['socket'], function (socket) {
       for (var i = 0; i < len; i += chunkSize) {
         var chunk = data.slice(i, i + chunkSize);
         socket.emit('transfer-chunk', {
-          total: len,
           chunk: chunk,
           seq: s++,
           totalChunks: c,
