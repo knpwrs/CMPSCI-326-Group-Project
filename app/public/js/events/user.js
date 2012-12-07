@@ -1,13 +1,12 @@
 define([
   'socket',
-  'views/User'
+  'views/User',
+  'stores/users'
 ], function (
   socket,
-  UserView
+  UserView,
+  users
 ) {
-  // Store each user
-  var users = {};
-
   // Handle new users
   socket.on('user-join', function (data) {
     users[data.id] = new UserView(data);
