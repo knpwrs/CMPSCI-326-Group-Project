@@ -7,8 +7,8 @@ var approvedTransfers = {};
 module.exports = function (socket) {
   socket.on('request-transfer', function (data) {
     var out = users.getSocket(data.user);
-    data.from = socket.id;
-
+    data.from = users.getUser(socket.id).username;
+    
     out.emit('request-transfer', data);
     out.once(data.eventName, function (accept) {
       if (accept) {
@@ -20,7 +20,7 @@ module.exports = function (socket) {
 
   socket.on('transfer-chunk', function (data) {
     var out = users.getSocket(data.user);
-    data.from = socket.id
+    data.from = socket.id;
 
     if (approvedTransfers[data.eventName] !== undefined) {
       out.emit('transfer-chunk', data);
