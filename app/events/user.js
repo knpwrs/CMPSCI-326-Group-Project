@@ -13,6 +13,12 @@ module.exports = function (socket) {
     socket.broadcast.emit('user-join', data);
   });
 
+  // Handle user name change
+  socket.on('change-name', function (data) {
+   users.getUser(data.id).username = data.name;
+   socket.broadcast.emit('change-name', data);
+  });
+
   // Handle leaving users
   socket.on('disconnect', function () {
     users.removeUser(socket.id);

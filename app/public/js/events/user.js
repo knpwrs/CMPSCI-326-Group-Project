@@ -1,11 +1,13 @@
 define([
   'socket',
   'views/User',
-  'stores/users'
+  'stores/users',
+  'actions/namePrompt'
 ], function (
   socket,
   UserView,
-  users
+  users,
+  namePrompt
 ) {
   // Handle new users
   socket.on('user-join', function (data) {
@@ -18,6 +20,10 @@ define([
     delete users[id];
   });
 
-  // Create new user
-  socket.emit('user-join', {name: socket.socket.sessionid});
+  socket.on('change-name', function (data) {
+    users[data.id].changeName(data.name);
+  });
+
+  socket.emit('user-join', {name: socket.socket.sessionid, username: namePrompt()});
+
 });

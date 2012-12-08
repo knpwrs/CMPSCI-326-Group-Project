@@ -23,6 +23,11 @@ define([
     this.$el.remove();
   };
 
+  //NEW
+  UserView.prototype.changeName = function (name) {
+    $('.username', this.$el).text(name);
+  };
+
   function handleDragOver(e) {
     e.stopPropagation();
     e.preventDefault();

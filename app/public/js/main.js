@@ -7,14 +7,11 @@ require({
   'dom/header',
   'dom/users',
   'dom/notifications',
+  'dom/nameChanger',
   'events/user',
   'events/requestTransfer',
   'lib/domReady!'
-], function (
-  $header,
-  $users,
-  $notifications
-) {
+], function () {
   // Remove Loading Indicator
   $('#loading').remove();
 
