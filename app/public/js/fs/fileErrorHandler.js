@@ -1,3 +1,4 @@
+// This module defines a function which handles filesystem errors
 define(function () {
   return function (e) {
     var msg = '';

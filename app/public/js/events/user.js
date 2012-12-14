@@ -1,3 +1,4 @@
+// User events
 define([
   'socket',
   'views/User',
@@ -24,6 +25,7 @@ define([
     users[data.id].changeName(data.name);
   });
 
+  // Broadcast that a new user has joined.
   socket.emit('user-join', {name: socket.socket.sessionid, username: namePrompt()});
 
 });

@@ -1,3 +1,4 @@
+// This module is a jQuery element containing the name changer button
 define([
 	'actions/namePrompt',
 	'socket',
@@ -9,6 +10,7 @@ define([
 	users
 ) {
 	var $button = $('#nameChanger');
+	// Handle button clicks
 	$button.on('click', function (e) {
 		e.preventDefault();
 		var name = namePrompt();
