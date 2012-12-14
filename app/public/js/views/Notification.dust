@@ -1,0 +1,2 @@
+<p>Would you like to accept {file.name} from {from}?</p>
+<button class="yes">Yes</button><button class="no">No</button>

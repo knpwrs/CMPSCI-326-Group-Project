@@ -1,18 +1,31 @@
 // fs/tfs!20971520 creates a 20 MB temporary file system
-define(['socket', 'fs/tfs!20971520', 'fs/fileErrorHandler'], function (socket, fs, fer) {
+define([
+  'socket',
+  'fs/tfs!20971520',
+  'fs/fileErrorHandler',
+  'stores/notifications',
+  'views/Notification'
+  ], function (
+    socket, 
+    fs, 
+    fer,
+    notifications,
+    NotificationView
+    ) {
   // Keep track of approved transfers
   var approvedTransfers = {};
 
   socket.on('request-transfer', function (data) {
-    var accept = confirm('Accept ' + data.file.name + ' (' + data.file.size + ' bytes) from ' + data.from + '?');
-    if (accept) {
-      approvedTransfers[data.eventName] = {
-        data: '',
-        name: data.file.name,
-        type: data.file.type
-      };
-    }
-    socket.emit(data.eventName, accept);
+    notifications[data.eventName] = new NotificationView(data, function (accept) {
+      if (accept) {
+        approvedTransfers[data.eventName] = {
+          data: '',
+          name: data.file.name,
+          type: data.file.type
+        };
+      }
+      socket.emit(data.eventName, accept);
+    });
   });
 
   socket.on('transfer-chunk', function (data) {
@@ -21,12 +34,14 @@ define(['socket', 'fs/tfs!20971520', 'fs/fileErrorHandler'], function (socket, f
       return;
     }
     transfer.data += data.chunk;
+    notifications[data.eventName].updateView(data.seq / data.totalChunks);
     if (data.seq === data.totalChunks) {
       console.log('Save file with event name %s.', data.eventName);
       fs.root.getFile(new Date().getTime() + '-' + transfer.name, {create: true, exclusive: true}, function (fe) {
         fe.createWriter(function (fw) {
           fw.onwriteend = function (e) {
             console.log('Write completed: %s', fe.toURL());
+            notifications[data.eventName].completed(fe.toURL());
           };
           fw.onerror = function (e) {
             console.log('Write failed: %s', e.toString());

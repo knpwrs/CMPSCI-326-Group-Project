@@ -2,7 +2,8 @@ define([
   'dust',
   'dustc!./User.dust',
   'dom/users',
-  'actions/requestTransfer'
+  'actions/requestTransfer',
+  'lib/domReady!'
 ], function (
   dust,
   template,

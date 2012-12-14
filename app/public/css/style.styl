@@ -24,6 +24,7 @@ body
   width 100%
 
 notifications-width = 200px
+bar-height = 30px
 
 #nameChanger
   margin-left: 50px;
@@ -44,6 +45,29 @@ notifications-width = 200px
     word-wrap break-word
 
 #notifications
-  width notifications-width
+  margin-right 0px
   float right
+  .notification-container
+    width notifications-width
+    height 150px
+    margin 10px
+    background decayl
+    border-style solid
+    border-width 5px
+    border-color charcoal
+    word-wrap break-word
+    .box
+      height bar-height
+      width notifications-width
+      background decayl
+      position relative
+      .bar
+        height bar-height
+        background lagoon
+        .bar-text
+          position absolute
+          top 0
+          left 0
+          text-align center
+          width 100%
 
