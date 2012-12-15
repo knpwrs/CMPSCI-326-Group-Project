@@ -21,6 +21,7 @@ define([
     delete users[id];
   });
 
+  // Handle name change request
   socket.on('change-name', function (data) {
     users[data.id].changeName(data.name);
   });
